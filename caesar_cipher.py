@@ -1,6 +1,6 @@
 class CaesarCipher():
     '''
-        That the class is a special realize of caesar cipher
+        This class is a special realize of caesar cipher
 
         THE SPECIAL METHODS:
         __init__(text, shift) type: main -> class initialization

@@ -1,2 +1,2 @@
 # caesarcipher
-The сaesar cipher implementation
+The сaesar cipher implementation (beta)

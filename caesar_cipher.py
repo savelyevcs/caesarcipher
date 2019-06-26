@@ -1,5 +1,3 @@
-import string
-
 class CaesarCipher():
     '''
         That the class is a special realize of caesar cipher
@@ -14,34 +12,41 @@ class CaesarCipher():
         get_result() type: return -> encrypted or decrypted result
         get_shift() type: return -> shift
     '''
-    _ascii_letters = string.ascii_letters
-    _ascii_lowercase_letters = string.ascii_lowercase
-    _ascii_uppercase_letters = string.ascii_uppercase
-    _ascii_unsigned_letters = '`~!#$%^&*()_+-={}[]:";\'<>,.?/\@1234567890 '
+    _ascii_lowercase = 'abcdefghijklmnopqrstuvwxyz'
+    _ascii_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     def __init__(self, text, shift):
         self.text = list(text)
         self.shift = shift
+        self._buffer = []
 
     def __repr__(self):
         return ''.join(self.text)
 
     def encrypt(self):
-        for i in range(len(self.text)):
-            if self.text[i] in list(CaesarCipher._ascii_unsigned_letters):
+        for i in self.text:
+            if not i.isalpha(): 
+                self._buffer.append(i)
                 continue
-            else:
-                self.text[i] = chr(ord(self.text[i]) + self.shift)
+            elif i in list(CaesarCipher._ascii_uppercase):
+                shifted_index = (
+                    CaesarCipher._ascii_uppercase.index(i) + self.shift
+                ) % len(CaesarCipher._ascii_uppercase)
 
-    def decrypt(self):
-        for i in range(len(self.text)):
-            if self.text[i] in list(CaesarCipher._ascii_unsigned_letters):
-                continue
-            else:
-                self.text[i] = chr(ord(self.text[i]) - self.shift)
+                self._buffer.append(
+                    CaesarCipher._ascii_uppercase[shifted_index]
+                )
+            elif i in list(CaesarCipher._ascii_lowercase):
+                shifted_index = (
+                    CaesarCipher._ascii_lowercase.index(i) + self.shift
+                ) % len(CaesarCipher._ascii_lowercase)
+
+                self._buffer.append(
+                    CaesarCipher._ascii_lowercase[shifted_index]
+                )
 
     def get_result(self):
-        return ''.join(self.text)
+        return ''.join(self._buffer)
 
     def get_shift(self):
         return self.shift

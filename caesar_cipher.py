@@ -47,5 +47,3 @@ class CaesarCipher():
 
     def get_shift(self):
         return self.shift
-
-print(CaesarCipher.__doc__)

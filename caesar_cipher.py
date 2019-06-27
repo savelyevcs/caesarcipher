@@ -30,7 +30,6 @@ class CaesarCipher():
         for i in self.text:
             if not i.isalpha(): 
                 self.encrypt_buffer += i
-                continue
             elif i in list(CaesarCipher._ascii_uppercase):
                 next_index = (
                     CaesarCipher._ascii_uppercase.index(i) + self.shift
@@ -48,7 +47,6 @@ class CaesarCipher():
         for i in self.encrypt_buffer:
             if not i.isalpha():
                 self.decrypt_buffer += i
-                continue
             elif i in list(CaesarCipher._ascii_uppercase):
                 prev_index = (
                     CaesarCipher._ascii_uppercase.index(i) - self.shift

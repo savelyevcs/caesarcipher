@@ -1,4 +1,4 @@
-class CaesarCipher():
+class CaesarCipherASCII():
     '''
         This class is a special realize of caesar cipher
 
@@ -9,65 +9,72 @@ class CaesarCipher():
         THE PERSONAL METHODS:
         encrypt() -> text encrypting
         decrypt() -> text decrypting
-        get_result() -> returns encrypted or decrypted value
-        get_encrypted_result() -> returns encrypted value
-        get_decrypted_result() -> returns decrypted value
+        bunch() -> returns encrypted or decrypted value
+        encrypted() -> returns encrypted value
+        decrypted() -> returns decrypted value
     '''
-    _ascii_lowercase = 'abcdefghijklmnopqrstuvwxyz'
-    _ascii_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    _ascii_lower = list('abcdefghijklmnopqrstuvwxyz')
+    _ascii_upper = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
 
     def __init__(self, text = None, shift = None):
-        if not any((text, shift)):
-            raise Exception('You did not enter one of the values')
-            return
+        if None in (text, shift):
+            raise TypeError('<text> or <shift> argument not defined')
 
-        self.text = list(text)
+        self.text = text
         self.shift = shift
-        self.encrypt_buffer = ''
-        self.decrypt_buffer = ''
+        self._en_buffer = self._de_buffer = ''
 
     def encrypt(self):
         for i in self.text:
             if not i.isalpha(): 
-                self.encrypt_buffer += i
-            elif i in list(CaesarCipher._ascii_uppercase):
+                self._en_buffer += i
+            elif i in CaesarCipherASCII._ascii_upper:
                 next_index = (
-                    CaesarCipher._ascii_uppercase.index(i) + self.shift
+                    CaesarCipherASCII._ascii_upper.index(i) + self.shift
                 ) % 26
 
-                self.encrypt_buffer += CaesarCipher._ascii_uppercase[next_index]
-            elif i in list(CaesarCipher._ascii_lowercase):
+                self._en_buffer += CaesarCipherASCII._ascii_upper[next_index]
+            elif i in CaesarCipherASCII._ascii_lower:
                 next_index = (
-                    CaesarCipher._ascii_lowercase.index(i) + self.shift
+                    CaesarCipherASCII._ascii_lower.index(i) + self.shift
                 ) % 26
 
-                self.encrypt_buffer += CaesarCipher._ascii_lowercase[next_index]
+                self._en_buffer += CaesarCipherASCII._ascii_lower[next_index]
     
     def decrypt(self):
-        for i in self.encrypt_buffer:
+        for i in self._en_buffer:
             if not i.isalpha():
-                self.decrypt_buffer += i
-            elif i in list(CaesarCipher._ascii_uppercase):
+                self._de_buffer += i
+            elif i in CaesarCipherASCII._ascii_upper:
                 prev_index = (
-                    CaesarCipher._ascii_uppercase.index(i) - self.shift
+                    CaesarCipherASCII._ascii_upper.index(i) - self.shift
                 ) % 26
 
-                self.decrypt_buffer += CaesarCipher._ascii_uppercase[prev_index]
-            elif i in list(CaesarCipher._ascii_lowercase):
+                self._de_buffer += CaesarCipherASCII._ascii_upper[prev_index]
+            elif i in CaesarCipherASCII._ascii_lower:
                 prev_index = (
-                    CaesarCipher._ascii_lowercase.index(i) - self.shift
+                    CaesarCipher._ascii_lower.index(i) - self.shift
                 ) % 26
 
-                self.decrypt_buffer += CaesarCipher._ascii_lowercase[prev_index]
+                self._de_buffer += CaesarCipher._ascii_lower[prev_index]
 
-    def get_encrypted_result(self):
-        return self.encrypt_buffer
+    @property
+    def encrypted(self):
+        if self._en_buffer == '':
+            return 'The buffer is empty'
 
-    def get_decrypted_result(self):
-        return self.decrypt_buffer
+        return self._en_buffer
+
+    @property
+    def decrypted(self):
+        if self._de_buffer == '':
+            return 'The buffer is empty'
+
+        return self._de_buffer
     
-    def get_result(self):
+    @property
+    def bunch(self):
         return {
-            'encrypted': self.encrypt_buffer,
-            'decrypted': self.decrypt_buffer
+            'encrypted': self._en_buffer,
+            'decrypted': self._de_buffer
         }

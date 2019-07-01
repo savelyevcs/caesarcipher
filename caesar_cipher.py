@@ -9,7 +9,7 @@ class CaesarCipherASCII():
         THE PERSONAL METHODS:
         encrypt() -> text encrypting
         decrypt() -> text decrypting
-        bunch() -> returns encrypted or decrypted value
+        bunch() -> returns encrypted and decrypted value
         encrypted() -> returns encrypted value
         decrypted() -> returns decrypted value
     '''
